@@ -36,6 +36,8 @@ Code is written using features of ES6 so you need to build it in order to use.
 
 Build results would be stored in a ./build/ directory
 ```
+sudo npm install -g babel-cli
+
 npm run build
 ```
 
@@ -60,7 +62,7 @@ Calculate your wages
 Install babel >= v6.x.x
 
 ```
-sudo npm install -g babel
+sudo npm install -g babel-cli
 ```
 
 Install dev-dependencies
