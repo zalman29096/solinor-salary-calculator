@@ -39,13 +39,11 @@ Build results would be stored in a ./build/ directory
 Install babel >= v6.x.x
 
 ```
-sudo npm install -g babel-cli
+npm install babel-cli
 ```
 
 Build project
 ```
-npm install babel-cli
-
 npm run build
 ```
 
