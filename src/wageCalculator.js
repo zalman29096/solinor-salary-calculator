@@ -82,38 +82,43 @@ let shiftToInterval = (shiftStart, shiftEnd) => {
 let getIntersectionLength = (interval1, interval2) => {
   return Math.max(
     Math.min(interval1[1], interval2[1]) - Math.max(interval1[0], interval2[0]),
-    0                                                                                                                   // Intervals don't intersect
+    0  // Intervals don't intersect
   )
 }
 
 /**
- * Represents work shift as timeline-wise oriented set of objects. Each object describes duration and part of day during which the work has been done
+ * Represents work shift as timeline-wise oriented set of objects.
+ * Each object describes duration and part of day during which the work has been done
  *
  * @param   {string}  shiftStart    Start of shift in format HH:mm
  * @param   {string}  shiftEnd      End of shift in format HH:mm
- * @returns {Array<object>}         Sequential representation of work shift. Each chunk describes duration and part of day during which the work has been done
+ * @returns {Array<object>}         Sequential representation of work shift.
+ *                                  Each chunk describes duration and part of day during which the work has been done
  */
 let parseShift = (shiftStart, shiftEnd) => {
 
   [shiftStart, shiftEnd] = shiftToInterval(shiftStart, shiftEnd)
-  if (shiftEnd <= shiftStart) shiftEnd += TWENTY_FOUR_HOURS_MINUTES                                                     // If end of shift is less than start assume that person stopped working on the next day
+  if (shiftEnd <= shiftStart) shiftEnd += TWENTY_FOUR_HOURS_MINUTES
 
   return TWO_DAY_INTERVALS.map((DAY_INTERVAL, DAY_INTERVAL_INDEX) => {
     return {
       minutes: getIntersectionLength([shiftStart, shiftEnd], DAY_INTERVAL),
-      at: (DAY_INTERVAL_INDEX % 2 === 0) ? 'evening' : 'regular'                                                        // Evening intervals have even indexes
+      at: (DAY_INTERVAL_INDEX % 2 === 0) ? 'evening' : 'regular' // Evening intervals have even indexes
     }
   }).filter((v) => {
-    return v.minutes > 0                                                                                                // Filter out day parts without work
+    return v.minutes > 0   // Filter out day parts without work
   })
 
 }
 
 
 /**
- * Sequentially iterates work shifts in timeline-wise direction in order to calculate non-overtime wage and exclude overtime
+ * Sequentially iterates work shifts in timeline-wise direction
+ * in order to calculate non-overtime wage and exclude overtime
  *
- * @param   {Array<object>}         totalDayInterval  Each object of array contains information about how many minutes of work were done during which part of day
+ * @param   {Array<object>}         totalDayInterval  Each object of array contains information about
+ *                                                    how many minutes of work were done during which part of day
+ *
  * @returns {Array<number, number>}                   Wage for non-overtime hours | Minutes of overtime
  */
 let getNonOvertimeWageAndOvertimeMinutes = (totalDayInterval) => {
@@ -122,9 +127,9 @@ let getNonOvertimeWageAndOvertimeMinutes = (totalDayInterval) => {
     let {minutes: minutesToAssume, at: dayPart} = shiftPart
     let {nonOvertimeWage, overtimeMinutes, workedMinutesIterator} = accumulator
 
-    if (workedMinutesIterator + minutesToAssume > OVERTIME_STARTS_AFTER) {                                              // Part or whole shift is already overtime
-      minutesToAssume = Math.max(OVERTIME_STARTS_AFTER - workedMinutesIterator, 0)                                      // Getting amount of non-overtime minutes in this shift
-      overtimeMinutes += shiftPart.minutes - minutesToAssume                                                            // Getting amount of overtime minutes in this shift
+    if (workedMinutesIterator + minutesToAssume > OVERTIME_STARTS_AFTER) {   // Part or whole shift is already overtime
+      minutesToAssume = Math.max(OVERTIME_STARTS_AFTER - workedMinutesIterator, 0) // Amount of non-overtime minutes
+      overtimeMinutes += shiftPart.minutes - minutesToAssume                       // Amount of overtime minutes
     }
 
     nonOvertimeWage += wage(minutesToAssume, (dayPart === 'evening' ? EVENING_WAGE : REGULAR_WAGE))
@@ -147,7 +152,9 @@ let getOvertimeWage = (overtime) => {
 
 /**
  * @param   {Array<object>} dayShifts  Work shifts for this day. Each shift has form {start : 'HH:mm', end : 'HH:mm'}
- * @returns {Array<object>}            Flat array of objects. Each object of array contains information about how many minutes of work were done during which part(evening|regular) of day
+ * @returns {Array<object>}            FLAT array of objects.
+ *                                     Each object of array contains information about how many minutes of work
+ *                                     were done during which part(evening|regular) of day
  */
 let preprocessDayShifts = (dayShifts) => {
   return [].concat.apply([], dayShifts.map((shift) => {

@@ -30,8 +30,8 @@ let groupResultBy = (groupCriteria, result) => {
 let groupResultByMonth = (result) => {
   return formatWage(
     Object.values(result.reduce((groupedResult, wageLine) => {
-      let month = wageLine.day.substring(wageLine.day.indexOf(".") + 1)                                                 // Get MM.YYYY part of computed day
-      month = [Number(month.split(".")[0]), month.split(".")[1]].join(".")                                              // convert notations 01.01.2017 to 1.1.2017
+      let month = wageLine.day.substring(wageLine.day.indexOf(".") + 1)     // Get MM.YYYY part of computed day
+      month = [Number(month.split(".")[0]), month.split(".")[1]].join(".")  // Convert notations 01.01.2017 to 1.1.2017
       let key = `${wageLine.id}|${month}`
 
       if(!groupedResult[key])
