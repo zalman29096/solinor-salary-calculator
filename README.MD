@@ -20,6 +20,17 @@ git clone https://github.com/zalman29096/solinor-salary-calculator.git
 cd solinor-salary-calculator
 ```
 
+#### Dependencies
+
+Install node.js >= v9.x.x and local dependencies
+
+  ```
+  sudo apt install npm
+  sudo npm install -g n
+  sudo n stable
+  npm install 
+  ```
+
 #### Build it
 Code is written using features of ES6 so you need to build it in order to use. 
 
@@ -30,14 +41,6 @@ npm run build
 
 #### Run it
 
-Install node.js >= v9.x.x and local dependencies
-
-  ```
-  sudo apt install npm
-  sudo npm install -g n
-  sudo n stable
-  npm install 
-  ```
 
 View flags usage
 
