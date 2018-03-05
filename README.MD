@@ -35,8 +35,16 @@ Install node.js >= v9.x.x and local dependencies
 Code is written using features of ES6 so you need to build it in order to use. 
 
 Build results would be stored in a ./build/ directory
+
+Install babel >= v6.x.x
+
 ```
 sudo npm install -g babel-cli
+```
+
+Build project
+```
+npm install babel-cli
 
 npm run build
 ```
@@ -58,12 +66,6 @@ Calculate your wages
   ```
 
 #### Test it
-
-Install babel >= v6.x.x
-
-```
-sudo npm install -g babel-cli
-```
 
 Install dev-dependencies
 
