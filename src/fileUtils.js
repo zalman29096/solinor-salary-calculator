@@ -74,7 +74,7 @@ let _addShiftToGroup = (shift, groupedShifts) => {
  *  ]
  * }
  *
- * @param   {array<array>} splittedFileContent
+ * @param   {Array<Array>} splittedFileContent
  * @returns {object}
  */
 let groupShiftsByPersonsAndDates = (splittedFileContent) => {

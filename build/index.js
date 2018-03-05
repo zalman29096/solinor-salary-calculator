@@ -22,7 +22,7 @@ var separator = function separator() {
 var groupBy = function groupBy() {
   return _commander2.default.groupBy || "month";
 };
-
+console.time("Total execution time");
 _commander2.default.option('-i, --input-file   [path]', 'Path to CSV file with work shifts').option('-o, --output-file  [path]', '!OPTIONAL! File name to save results to. If not provided, output would be piped to STDOUT').option('-s, --separator    [character]', '!OPTIONAL! CSV separator symbol. Defaults to ;').option('-g, --group-by     [group-criteria]', '!OPTIONAL! Group results by [day|month]. Defaults to month').parse(process.argv);
 
 var _fetchFileContent = (0, _fileUtils.fetchFileContent)(_commander2.default['inputFile']),
@@ -59,3 +59,5 @@ try {
 } catch (e) {
   console.log(e);
 }
+console.log("Done");
+console.timeEnd("Total execution time");

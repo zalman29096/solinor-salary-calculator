@@ -25,11 +25,11 @@ var m2h = function m2h(minutes) {
 };
 
 /**
- * Converts hours:minutes to milliseconds
+ * Converts hours:minutes to minutes
  *
  * @param   {(number|string)} hours
  * @param   {(number|string)} minutes
- * @returns {number}          milliseconds
+ * @returns {number}          minutes
  */
 var HM2m = function HM2m(hours) {
   var minutes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
@@ -68,11 +68,11 @@ var THREE_HOURS = 3 * ONE_HOUR;
 var FOUR_HOURS = 4 * ONE_HOUR;
 
 /**
- * Converts shift represented in form of [start(HH:mm), end(HH:mm)] to interval [start(minutes), end(minutes)]
+ * Converts shift represented in form of start(HH:mm), end(HH:mm) to interval [start(minutes), end(minutes)]
  *
  * @param   {string} shiftStart   Start of shift in format of HH:mm
  * @param   {string} shiftEnd     END  of shift in format of HH:mm
- * @returns {Array<number>}       Shift represented as Moment interval
+ * @returns {Array<number>}       Shift represented as minutes interval
  */
 var shiftToInterval = function shiftToInterval(shiftStart, shiftEnd) {
   return [HM2m.apply(undefined, _toConsumableArray(shiftStart.split(':'))), HM2m.apply(undefined, _toConsumableArray(shiftEnd.split(':')))];
@@ -91,11 +91,13 @@ var getIntersectionLength = function getIntersectionLength(interval1, interval2)
 };
 
 /**
- * Represents work shift as timeline-wise oriented set of objects. Each object describes duration and part of day during which the work has been done
+ * Represents work shift as timeline-wise oriented set of objects.
+ * Each object describes duration and part of day during which the work has been done
  *
  * @param   {string}  shiftStart    Start of shift in format HH:mm
  * @param   {string}  shiftEnd      End of shift in format HH:mm
- * @returns {Array<object>}         Sequential representation of work shift. Each chunk describes duration and part of day during which the work has been done
+ * @returns {Array<object>}         Sequential representation of work shift.
+ *                                  Each chunk describes duration and part of day during which the work has been done
  */
 var parseShift = function parseShift(shiftStart, shiftEnd) {
   var _shiftToInterval = shiftToInterval(shiftStart, shiftEnd);
@@ -105,7 +107,7 @@ var parseShift = function parseShift(shiftStart, shiftEnd) {
   shiftStart = _shiftToInterval2[0];
   shiftEnd = _shiftToInterval2[1];
 
-  if (shiftEnd <= shiftStart) shiftEnd += TWENTY_FOUR_HOURS_MINUTES; // If end of shift is less than start assume that person stopped working on the next day
+  if (shiftEnd <= shiftStart) shiftEnd += TWENTY_FOUR_HOURS_MINUTES;
 
   return TWO_DAY_INTERVALS.map(function (DAY_INTERVAL, DAY_INTERVAL_INDEX) {
     return {
@@ -118,9 +120,12 @@ var parseShift = function parseShift(shiftStart, shiftEnd) {
 };
 
 /**
- * Sequentially iterates work shifts in timeline-wise direction in order to calculate non-overtime wage and exclude overtime
+ * Sequentially iterates work shifts in timeline-wise direction
+ * in order to calculate non-overtime wage and exclude overtime
  *
- * @param   {Array<object>}         totalDayInterval  Each object of array contains information about how many minutes of work were done during which part of day
+ * @param   {Array<object>}         totalDayInterval  Each object of array contains information about
+ *                                                    how many minutes of work were done during which part of day
+ *
  * @returns {Array<number, number>}                   Wage for non-overtime hours | Minutes of overtime
  */
 var getNonOvertimeWageAndOvertimeMinutes = function getNonOvertimeWageAndOvertimeMinutes(totalDayInterval) {
@@ -134,8 +139,8 @@ var getNonOvertimeWageAndOvertimeMinutes = function getNonOvertimeWageAndOvertim
 
     if (workedMinutesIterator + minutesToAssume > OVERTIME_STARTS_AFTER) {
       // Part or whole shift is already overtime
-      minutesToAssume = Math.max(OVERTIME_STARTS_AFTER - workedMinutesIterator, 0); // Getting amount of non-overtime minutes in this shift
-      overtimeMinutes += shiftPart.minutes - minutesToAssume; // Getting amount of overtime minutes in this shift
+      minutesToAssume = Math.max(OVERTIME_STARTS_AFTER - workedMinutesIterator, 0); // Amount of non-overtime minutes
+      overtimeMinutes += shiftPart.minutes - minutesToAssume; // Amount of overtime minutes
     }
 
     nonOvertimeWage += wage(minutesToAssume, dayPart === 'evening' ? EVENING_WAGE : REGULAR_WAGE);
@@ -155,7 +160,9 @@ var getOvertimeWage = function getOvertimeWage(overtime) {
 
 /**
  * @param   {Array<object>} dayShifts  Work shifts for this day. Each shift has form {start : 'HH:mm', end : 'HH:mm'}
- * @returns {Array<object>}            Flat array of objects. Each object of array contains information about how many minutes of work were done during which part(evening|regular) of day
+ * @returns {Array<object>}            FLAT array of objects.
+ *                                     Each object of array contains information about how many minutes of work
+ *                                     were done during which part(evening|regular) of day
  */
 var preprocessDayShifts = function preprocessDayShifts(dayShifts) {
   return [].concat.apply([], dayShifts.map(function (shift) {

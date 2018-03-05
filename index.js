@@ -13,7 +13,7 @@ const separator = () => {
 const groupBy = () => {
   return program.groupBy || "month"
 }
-
+console.time("Total execution time")
 program
   .option('-i, --input-file   [path]', 'Path to CSV file with work shifts')
   .option('-o, --output-file  [path]', '!OPTIONAL! File name to save results to. If not provided, output would be piped to STDOUT')
@@ -33,11 +33,11 @@ let wages = []
 for (let personId in preprocessedFileContent) {
   for (let day in preprocessedFileContent[personId].days) {
     wages.push({
-      name: preprocessedFileContent[personId].name,
-      id: personId,
-      day: day,
-      wage: getDayWage(preprocessedFileContent[personId].days[day]),
-    })
+        name: preprocessedFileContent[personId].name,
+        id: personId,
+        day: day,
+        wage: getDayWage(preprocessedFileContent[personId].days[day]),
+      })
   }
 }
 
@@ -52,6 +52,8 @@ try {
     saveResultToCsv(program.outputFile, groupedResult, separator())
   else
     console.log(jsonToCsv(groupedResult, separator()))
-}catch (e){
+} catch (e) {
   console.log(e)
 }
+console.log("Done")
+console.timeEnd("Total execution time")

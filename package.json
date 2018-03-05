@@ -10,7 +10,8 @@
   "author": "zalman29096@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "commander": "^2.14.1"
+    "commander": "^2.14.1",
+    "moment": "^2.21.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",

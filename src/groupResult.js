@@ -13,7 +13,7 @@ let formatWage = (result) => {
 let jsonToCsv = (jsonData, separator) => {
   return jsonData.map((r) => {
       return Object.values(r).join(separator)
-    }).join("\n") + "\n"
+    }).join(`\n`) + `\n`
 }
 
 let groupResultBy = (groupCriteria, result) => {

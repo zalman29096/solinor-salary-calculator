@@ -30,9 +30,9 @@ var rowToObject = function rowToObject(row) {
     */
 
 var validateShiftObject = function validateShiftObject(shift) {
-  return (shift.personId || shift.personId === 0) && !!shift.date && !!shift.start && !!shift.end && /^(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})$/.test(shift.date) && // Valid date of format DD.MM.YYYY
-  /^(?:\d|[01]\d|2[0-4]):[0-5]\d$/.test(shift.start) && // Valid time of format HH:mm
-  /^(?:\d|[01]\d|2[0-4]):[0-5]\d$/.test(shift.end); // Valid time of format HH:mm
+  return (shift.personId || shift.personId === 0) && !!shift.date && !!shift.start && !!shift.end && /^(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})$/.test(shift.date) && // Valid DD.MM.YYYY date
+  /^(?:\d|[01]\d|2[0-4]):[0-5]\d$/.test(shift.start) && // Valid HH:mm time
+  /^(?:\d|[01]\d|2[0-4]):[0-5]\d$/.test(shift.end); // Valid HH:mm time
 };
 
 var splitFile = function splitFile(fileContent) {
@@ -82,7 +82,7 @@ var _addShiftToGroup = function _addShiftToGroup(shift, groupedShifts) {
  *  ]
  * }
  *
- * @param   {array<array>} splittedFileContent
+ * @param   {Array<Array>} splittedFileContent
  * @returns {object}
  */
 var groupShiftsByPersonsAndDates = function groupShiftsByPersonsAndDates(splittedFileContent) {
