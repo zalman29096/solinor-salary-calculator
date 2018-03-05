@@ -16,11 +16,11 @@ const m2h = (minutes) => {
 }
 
 /**
- * Converts hours:minutes to milliseconds
+ * Converts hours:minutes to minutes
  *
  * @param   {(number|string)} hours
  * @param   {(number|string)} minutes
- * @returns {number}          milliseconds
+ * @returns {number}          minutes
  */
 const HM2m = (hours, minutes = 0) => {
   return (Number(hours) * 60) + Number(minutes)
