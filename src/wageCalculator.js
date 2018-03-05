@@ -59,7 +59,7 @@ const FOUR_HOURS = 4 * ONE_HOUR
 
 
 /**
- * Converts shift represented in form of [start(HH:mm), end(HH:mm)] to interval [start(minutes), end(minutes)]
+ * Converts shift represented in form of start(HH:mm), end(HH:mm) to interval [start(minutes), end(minutes)]
  *
  * @param   {string} shiftStart   Start of shift in format of HH:mm
  * @param   {string} shiftEnd     END  of shift in format of HH:mm
