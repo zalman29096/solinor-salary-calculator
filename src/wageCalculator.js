@@ -63,7 +63,7 @@ const FOUR_HOURS = 4 * ONE_HOUR
  *
  * @param   {string} shiftStart   Start of shift in format of HH:mm
  * @param   {string} shiftEnd     END  of shift in format of HH:mm
- * @returns {Array<number>}       Shift represented as Moment interval
+ * @returns {Array<number>}       Shift represented as minutes interval
  */
 let shiftToInterval = (shiftStart, shiftEnd) => {
   return [
